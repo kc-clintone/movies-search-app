@@ -3,7 +3,79 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>eMovies</title>
+		<link rel="stylesheet" href="./css/styles.css" />
+		<title>carrot movies</title>
 	</head>
-	<body></body>
+	<body>
+		<header>
+			<div class="logo">
+				<h3>Carrot Movies</h3>
+			</div>
+		</header>
+		<main>
+			<img src="./assets/cover.jpg" alt="cover_image" class="cover_img" />
+			<div class="hero">
+				<div class="content">
+					<div class="search">
+						<input
+							id="searchInput"
+							type="search"
+							name="search"
+							value=""
+							placeholder="type a film's title to search"
+						/>
+
+						<button class="search-btn" type="submit" id="searchBtn">
+							Search
+						</button>
+					</div>
+					<!-- --------section A--------- -->
+					<div class="a-section" id="sectionA">
+						<div class="about">
+							<div class="about-description">
+								<div class="desc-title">
+									<h3>Carrot Movies</h3>
+								</div>
+								<div class="desc-sub-title">
+									<h3>
+										Carrot movies search app is a simple and intuitive web
+										application that allows users to find information about
+										movies quickly. With a user-friendly interface, you can
+										enter keywords or movie titles to search through a vast
+										database of films using the OMDB API. It retrieves relevant
+										movie details, including titles, release years, ratings,
+										poster images and more, providing users with a comprehensive
+										overview. Whether you're looking for a specific movie or
+										exploring new titles, the carrot movies search app is a
+										convenient tool to discover and access essential information
+										about films, enhancing your movie-watching experience.
+									</h3>
+								</div>
+							</div>
+						</div>
+
+						<div class="capabilities">
+							<div class="card card-1">
+								<h4>Best ratings.</h4>
+							</div>
+							<div class="card card-2">
+								<h4>Cast members.</h4>
+							</div>
+							<div class="card card-3">
+								<h4>Plot and setting.</h4>
+							</div>
+							<div class="card card-4">
+								<h4>Detail description.</h4>
+							</div>
+						</div>
+					</div>
+					<!-- --------SECTION b--------- -->
+					<div class="b-section" id="sectionB">
+						<div class="movie" id="movieResults"></div>
+					</div>
+				</div>
+			</div>
+		</main>
+		<script src="./js/app.js"></script>
+	</body>
 </html>
