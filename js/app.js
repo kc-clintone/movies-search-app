@@ -52,12 +52,26 @@ async function handleSearch() {
 searchBtn.addEventListener('click', handleSearch);
 
 // Toggle between showing more and less details
+
+// function toggleDetails(element) {
+// 	const moreDetails = element.nextElementSibling;
+// 	moreDetails.classList.toggle('show-details');
+// 	element.textContent = moreDetails.classList.contains('show-details')
+// 		? 'View less'
+// 		: 'View more';
+// }
+
 function toggleDetails(element) {
 	const moreDetails = element.nextElementSibling;
 	moreDetails.classList.toggle('show-details');
+
+	moreDetails.style.display = moreDetails.classList.contains('show-details')
+		? 'flex'
+		: 'none';
+
 	element.textContent = moreDetails.classList.contains('show-details')
-		? 'Less'
-		: 'More';
+		? 'View Less'
+		: 'View More';
 }
 
 // Display movie results
@@ -76,7 +90,7 @@ function displayMovieResults(dataArray) {
       <h2 class='movie-release-year-title'>Release Year:</h2>
       <h2 class='release-date'>${Year}</h2>
       
-      <button class='details-btn' onclick="toggleDetails(this)">Show More Details</button>
+      <button class='details-btn' onclick="toggleDetails(this)">View more</button>
     `;
 
 		let moreDetails = document.createElement('div');
@@ -91,6 +105,13 @@ function displayMovieResults(dataArray) {
       <p class='common-stat-h4-styles'>Genre:</p>
       <span class='common-stat-h3-styles'>${Type}</span>
     `;
+
+		moreDetails.style.display = 'none';
+		moreDetails.style.flexDirection = 'column';
+		moreDetails.style.justifyContent = 'center';
+		moreDetails.style.alignItems = 'center';
+		moreDetails.style.width = '100%';
+		moreDetails.style.height = 'auto';
 
 		movieElement.appendChild(moreDetails);
 		movieResults.appendChild(movieElement);

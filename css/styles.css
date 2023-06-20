@@ -254,28 +254,8 @@ main {
 	width: 20rem;
 }
 
-.show-details .more-details {
-	display: flex;
-}
-
-.movie-details {
+.movie-details .show-details {
 	display: none;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	height: auto;
-}
-
-.show-details .movie-details {
-	display: flex;
-}
-.show-more-less::after {
-	content: 'Show More Details';
-	cursor: pointer;
-}
-.show-details .show-more-less::after {
-	content: 'Show Less Details';
 }
 
 .active {
