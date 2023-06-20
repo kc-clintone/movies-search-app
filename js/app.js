@@ -51,6 +51,8 @@ async function handleSearch() {
 			sectionB.classList.add('active');
 
 			isSearching = true;
+			searchBtn.textContent = '';
+			searchBtn.classList.add('loading');
 
 			try {
 				const totalResults = await getTotalResults(target);
@@ -69,6 +71,10 @@ async function handleSearch() {
 				console.error(error.message);
 				// Reset the search state ---if an error occurs---
 				isSearching = false;
+				searchBtn.textContent = 'Search';
+			} finally {
+				searchBtn.classList.remove('loading');
+				searchBtn.textContent = 'Cancel';
 			}
 		}
 	}
@@ -117,21 +123,38 @@ function displayMovieResults(dataArray) {
 
 			let movieElement = document.createElement('div');
 			movieElement.classList.add('movie-card');
-			movieElement.innerHTML = `
-        <img src=${Poster} alt='poster image' class='poster'/>
-        <h2 class='movie-release-year-title'>Title</h2>
-        <h2 class='movie-title'>${Title}</h2>
-        <h2 class='movie-release-year-title'>Release Year:</h2>
-        <h2 class='release-date'>${Year}</h2>
-        <button class='details-btn'>View more</button>
-      `;
+
+			// Check if poster image is available
+			if (Poster && Poster !== 'N/A') {
+				movieElement.innerHTML = `
+          <img src="${Poster}" alt="poster image" class="poster" />
+          <h2 class="movie-release-year-title">Title</h2>
+          <h2 class="movie-title">${Title}</h2>
+		  <h2 class="movie-release-year-title">Type:</h2>
+          <h2 class="movie-title">${Type}</h2>
+          <h2 class="movie-release-year-title">Release Year:</h2>
+          <h2 class="release-date">${Year}</h2>
+          <button class="details-btn">View more</button>
+        `;
+			} else {
+				movieElement.innerHTML = `
+          <img src="../assets/placeholder.webp" alt="poster unavailable" class="poster" />
+          <h2 class="movie-release-year-title">Title</h2>
+          <h2 class="movie-title">${Title}</h2>
+          <h2 class="movie-release-year-title">Type:</h2>
+          <h2 class="movie-title">${Type}</h2>
+          <h2 class="movie-release-year-title">Release Year:</h2>
+          <h2 class="release-date">${Year}</h2>
+          <button class="details-btn">View more</button>
+        `;
+			}
 
 			let moreDetails = document.createElement('div');
 			moreDetails.classList.add('movie-details');
 			moreDetails.innerHTML = `
-        <p class='common-stat-h4-styles'>IMDb ID:</p>
-        <span class='common-stat-h3-styles'>${imdbID}</span>
-      `;
+          <p class="common-stat-h4-styles">IMDb ID:</p>
+          <span class="common-stat-h3-styles">${imdbID}</span>
+        `;
 
 			// Hide moreDetails by default
 			moreDetails.style.display = 'none';
@@ -170,9 +193,11 @@ async function toggleDetails(button, imdbID) {
 
 	if (isExpanded) {
 		try {
+			button.textContent = '';
+			button.classList.add('loading');
+
 			const data = await fetchMovieDetails(imdbID);
 			moreDetails.innerHTML += `
-      
         <p class='common-stat-h4-styles'>Genre:</p>
         <span class='common-stat-h3-styles'>${data.Genre}</span>
         <p class='common-stat-h4-styles'>Rating:</p>
@@ -184,11 +209,13 @@ async function toggleDetails(button, imdbID) {
       `;
 		} catch (error) {
 			console.error(error.message);
+		} finally {
+			button.textContent = isExpanded ? 'View less' : 'View more';
+			button.classList.remove('loading');
 		}
 	}
 
 	moreDetails.style.display = isExpanded ? 'flex' : 'none';
-	button.textContent = isExpanded ? 'View less' : 'View more';
 }
 
 // Fetch additional movie details
@@ -214,13 +241,20 @@ async function fetchMovieDetails(imdbID) {
 function displayPagination(totalPages) {
 	paginationContainer.innerHTML = '';
 
-	const maxVisibleButtons = 5;
-	const halfVisibleButtons = Math.floor(maxVisibleButtons / 2);
-	let startPage = Math.max(currentPage - halfVisibleButtons, 1);
-	let endPage = Math.min(startPage + maxVisibleButtons - 1, totalPages);
+	const maxVisibleButtons = 10;
+	const maxVisiblePages = Math.min(totalPages, maxVisibleButtons);
 
-	if (endPage - startPage + 1 < maxVisibleButtons) {
-		startPage = Math.max(endPage - maxVisibleButtons + 1, 1);
+	let startPage, endPage;
+
+	if (currentPage <= Math.ceil(maxVisiblePages / 2)) {
+		startPage = 1;
+		endPage = maxVisiblePages;
+	} else if (currentPage > totalPages - Math.floor(maxVisiblePages / 2)) {
+		startPage = totalPages - maxVisiblePages + 1;
+		endPage = totalPages;
+	} else {
+		startPage = currentPage - Math.floor(maxVisiblePages / 2);
+		endPage = currentPage + Math.floor(maxVisiblePages / 2);
 	}
 
 	for (let i = startPage; i <= endPage; i++) {
@@ -236,9 +270,15 @@ function displayPagination(totalPages) {
 }
 
 // --------Handle page click event--------
-function handlePageClick(page) {
+async function handlePageClick(page) {
 	currentPage = page;
-	fetchAndDisplayResults(getUserInput(), currentPage);
+	await fetchAndDisplayResults(getUserInput(), currentPage);
+	const totalResults = await getTotalResults(getUserInput());
+	displayPagination(Math.ceil(totalResults / resultsPerPage));
+	paginationContainer.firstChild.scrollIntoView({
+		behavior: 'smooth',
+		block: 'start',
+	});
 }
 
 // --------resetting the whole app---------

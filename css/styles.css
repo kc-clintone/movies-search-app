@@ -322,6 +322,7 @@ main {
 	font-size: 13px;
 	font-weight: lighter;
 	color: rgb(194, 192, 192);
+	text-align: center;
 }
 
 .common-cast-card-styles {
@@ -396,4 +397,11 @@ main {
 .pagination-button.active {
 	background-color: #4caf50;
 	color: white;
+}
+
+/* loading */
+.loading::after {
+	content: 'Loading...';
+	display: inline-block;
+	margin-left: 5px;
 }
