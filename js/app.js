@@ -75,6 +75,7 @@ async function handleSearch() {
 			} finally {
 				searchBtn.classList.remove('loading');
 				searchBtn.textContent = 'Cancel';
+				searchBtn.style.backgroundColor = 'red';
 			}
 		}
 	}
@@ -314,6 +315,7 @@ function resetApplication() {
 
 	// =======RESET THE SEARCH BUTTON TO DEFAULT=======
 	searchBtn.textContent = 'Search';
+	searchBtn.style.backgroundColor = 'green';
 }
 
 // ====WHEN SEARCH IS INITIATED====
