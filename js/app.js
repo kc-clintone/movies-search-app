@@ -83,7 +83,6 @@ async function getTotalResults(query) {
 		const data = await response.json();
 
 		if (data.Response === 'True') {
-			console.log(data);
 			return parseInt(data.totalResults);
 		} else {
 			throw new Error(data.Error);
@@ -100,6 +99,7 @@ async function fetchAndDisplayResults(query, page) {
 		const results = await searchMovies(query, page);
 		const dataArray = [results];
 		displayMovieResults(dataArray);
+		console.log(dataArray);
 	} catch (error) {
 		console.error(error.message);
 		// Reset the search state ---if an error occurs---
@@ -131,8 +131,6 @@ function displayMovieResults(dataArray) {
 			moreDetails.innerHTML = `
         <p class='common-stat-h4-styles'>IMDb ID:</p>
         <span class='common-stat-h3-styles'>${imdbID}</span>
-        <p class='common-stat-h4-styles'>Genre:</p>
-        <span class='common-stat-h3-styles'>${Type}</span>
       `;
 
 			// Hide moreDetails by default
@@ -148,7 +146,9 @@ function displayMovieResults(dataArray) {
 
 			// Add event listener to the details button
 			const detailsBtn = movieElement.querySelector('.details-btn');
-			detailsBtn.addEventListener('click', () => toggleDetails(detailsBtn));
+			detailsBtn.addEventListener('click', () =>
+				toggleDetails(detailsBtn, imdbID)
+			);
 		}
 	}
 }
@@ -163,13 +163,52 @@ function displayNoResults() {
 }
 
 // --------Toggle movie details--------
-function toggleDetails(button) {
+async function toggleDetails(button, imdbID) {
 	const movieElement = button.parentNode;
 	const moreDetails = movieElement.querySelector('.movie-details');
 	const isExpanded = moreDetails.style.display === 'none';
 
+	if (isExpanded) {
+		try {
+			const data = await fetchMovieDetails(imdbID);
+			moreDetails.innerHTML += `
+        <p class='common-stat-h4-styles'>IMDb ID:</p>
+        <span class='common-stat-h3-styles'>${data.imdbID}</span>
+        <p class='common-stat-h4-styles'>Genre:</p>
+        <span class='common-stat-h3-styles'>${data.Genre}</span>
+        <p class='common-stat-h4-styles'>Rating:</p>
+        <span class='common-stat-h3-styles'>${data.imdbRating}</span>
+        <p class='common-stat-h4-styles'>Plot:</p>
+        <span class='common-stat-h3-styles'>${data.Plot}</span>
+        <p class='common-stat-h4-styles'>Actors:</p>
+        <span class='common-stat-h3-styles'>${data.Actors}</span>
+      `;
+		} catch (error) {
+			console.error(error.message);
+		}
+	}
+
 	moreDetails.style.display = isExpanded ? 'flex' : 'none';
 	button.textContent = isExpanded ? 'View less' : 'View more';
+}
+
+// Fetch additional movie details
+async function fetchMovieDetails(imdbID) {
+	const url = `http://www.omdbapi.com/?apikey=55253d3&i=${imdbID}`;
+
+	try {
+		const response = await fetch(url);
+		const data = await response.json();
+
+		if (data.Response === 'True') {
+			return data;
+		} else {
+			throw new Error(data.Error);
+		}
+	} catch (error) {
+		console.error(error.message);
+		throw error;
+	}
 }
 
 // --------Display pagination buttons--------
