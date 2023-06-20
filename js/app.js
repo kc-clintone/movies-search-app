@@ -104,8 +104,23 @@ async function fetchAndDisplayResults(query, page) {
 	try {
 		const results = await searchMovies(query, page);
 		const dataArray = [results];
-		displayMovieResults(dataArray);
-		console.log(dataArray);
+
+		// Get the selected filter option from the drop-down
+		const filterDropdown = document.getElementById('filterDropdown');
+		const selectedFilter = filterDropdown.value;
+
+		// Filter the results based on the selected filter option
+		let filteredResults = dataArray.map((movies) => ({
+			...movies,
+			Search: movies.Search.filter(
+				(movie) =>
+					selectedFilter === 'all' ||
+					movie.Type.toLowerCase() === selectedFilter
+			),
+		}));
+
+		displayMovieResults(filteredResults);
+		console.log(filteredResults);
 	} catch (error) {
 		console.error(error.message);
 		// Reset the search state ---if an error occurs---
