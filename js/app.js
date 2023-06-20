@@ -30,36 +30,42 @@ function getUserInput() {
 	return inputElement.value;
 }
 
+let isSearching = false;
+
 async function handleSearch() {
 	const target = getUserInput();
 
-	if (target.length === 0) {
-		sectionA.classList.add('active');
+	if (isSearching) {
+		// If currently searching, cancel the request and reset the application
+		isSearching = false;
+		clearSearchResults();
+		resetApplication();
 	} else {
-		sectionA.classList.add('inactive');
-		sectionB.classList.add('active');
+		if (target.length === 0) {
+			sectionA.classList.add('active');
+		} else {
+			sectionA.classList.add('inactive');
+			sectionB.classList.add('active');
 
-		try {
-			const results = await searchMovies(target);
-			const dataArray = [results];
-			displayMovieResults(dataArray);
-		} catch (error) {
-			console.error(error.message);
+			isSearching = true;
+
+			try {
+				const results = await searchMovies(target);
+				const dataArray = [results];
+				displayMovieResults(dataArray);
+
+				// Update the search button to "cancel"
+				searchBtn.textContent = 'Cancel';
+			} catch (error) {
+				console.error(error.message);
+				// Reset the search state if an error occurs
+				isSearching = false;
+			}
 		}
 	}
 }
 
 searchBtn.addEventListener('click', handleSearch);
-
-// Toggle between showing more and less details
-
-// function toggleDetails(element) {
-// 	const moreDetails = element.nextElementSibling;
-// 	moreDetails.classList.toggle('show-details');
-// 	element.textContent = moreDetails.classList.contains('show-details')
-// 		? 'View less'
-// 		: 'View more';
-// }
 
 function toggleDetails(element) {
 	const moreDetails = element.nextElementSibling;
@@ -116,4 +122,24 @@ function displayMovieResults(dataArray) {
 		movieElement.appendChild(moreDetails);
 		movieResults.appendChild(movieElement);
 	}
+}
+
+function clearSearchResults() {
+	const movieResults = document.getElementById('movieResults');
+	while (movieResults.firstChild) {
+		movieResults.firstChild.remove();
+	}
+}
+
+function resetApplication() {
+	const inputElement = document.getElementById('searchInput');
+	inputElement.value = '';
+
+	// Reset other elements or states as needed
+	sectionA.classList.remove('inactive');
+	sectionA.classList.remove('active');
+	sectionB.classList.remove('active');
+
+	// Reset the search button text to "Search"
+	searchBtn.textContent = 'Search';
 }
