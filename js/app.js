@@ -172,8 +172,7 @@ async function toggleDetails(button, imdbID) {
 		try {
 			const data = await fetchMovieDetails(imdbID);
 			moreDetails.innerHTML += `
-        <p class='common-stat-h4-styles'>IMDb ID:</p>
-        <span class='common-stat-h3-styles'>${data.imdbID}</span>
+      
         <p class='common-stat-h4-styles'>Genre:</p>
         <span class='common-stat-h3-styles'>${data.Genre}</span>
         <p class='common-stat-h4-styles'>Rating:</p>
@@ -215,9 +214,22 @@ async function fetchMovieDetails(imdbID) {
 function displayPagination(totalPages) {
 	paginationContainer.innerHTML = '';
 
-	for (let i = 1; i <= totalPages; i++) {
+	const maxVisibleButtons = 5;
+	const halfVisibleButtons = Math.floor(maxVisibleButtons / 2);
+	let startPage = Math.max(currentPage - halfVisibleButtons, 1);
+	let endPage = Math.min(startPage + maxVisibleButtons - 1, totalPages);
+
+	if (endPage - startPage + 1 < maxVisibleButtons) {
+		startPage = Math.max(endPage - maxVisibleButtons + 1, 1);
+	}
+
+	for (let i = startPage; i <= endPage; i++) {
 		const pageButton = document.createElement('button');
 		pageButton.textContent = i;
+		pageButton.classList.add('pagination-button');
+		if (i === currentPage) {
+			pageButton.classList.add('active');
+		}
 		pageButton.addEventListener('click', () => handlePageClick(i));
 		paginationContainer.appendChild(pageButton);
 	}
