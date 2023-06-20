@@ -25,6 +25,7 @@ const sectionA = document.getElementById('sectionA');
 const sectionB = document.getElementById('sectionB');
 const movieResults = document.getElementById('movieResults');
 
+// ===GET USER INPUT====
 function getUserInput() {
 	const inputElement = document.getElementById('searchInput');
 	return inputElement.value;
@@ -32,6 +33,7 @@ function getUserInput() {
 
 let isSearching = false;
 
+// ===HANDLE SEARCH FUNCTION===
 async function handleSearch() {
 	const target = getUserInput();
 
@@ -54,17 +56,18 @@ async function handleSearch() {
 				const dataArray = [results];
 				displayMovieResults(dataArray);
 
-				// Update the search button to "cancel"
+				// Update the search button to "cancel" ---while viewing results---
 				searchBtn.textContent = 'Cancel';
 			} catch (error) {
 				console.error(error.message);
-				// Reset the search state if an error occurs
+				// Reset the search state ---if an error occurs---
 				isSearching = false;
 			}
 		}
 	}
 }
 
+// ====WHEN SEARCH IS INITIATED====
 searchBtn.addEventListener('click', handleSearch);
 
 function toggleDetails(element) {
@@ -80,7 +83,7 @@ function toggleDetails(element) {
 		: 'View More';
 }
 
-// Display movie results
+// ----Display movie results----
 function displayMovieResults(dataArray) {
 	const movieResults = document.getElementById('movieResults');
 
@@ -112,6 +115,7 @@ function displayMovieResults(dataArray) {
       <span class='common-stat-h3-styles'>${Type}</span>
     `;
 
+		// ----just a few styles for the movie details element----
 		moreDetails.style.display = 'none';
 		moreDetails.style.flexDirection = 'column';
 		moreDetails.style.justifyContent = 'center';
@@ -124,6 +128,7 @@ function displayMovieResults(dataArray) {
 	}
 }
 
+// --------resetting the whole app---------
 function clearSearchResults() {
 	const movieResults = document.getElementById('movieResults');
 	while (movieResults.firstChild) {
@@ -135,11 +140,11 @@ function resetApplication() {
 	const inputElement = document.getElementById('searchInput');
 	inputElement.value = '';
 
-	// Reset other elements or states as needed
+	// =====RESET HOME ELEMENTS=====
 	sectionA.classList.remove('inactive');
 	sectionA.classList.remove('active');
 	sectionB.classList.remove('active');
 
-	// Reset the search button text to "Search"
+	// =======RESET THE SEARCH BUTTON TO DEFAULT=======
 	searchBtn.textContent = 'Search';
 }
