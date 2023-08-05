@@ -1,12 +1,16 @@
 # Movie Search App
 
+![Alt text](./assets/landing-page.png)
 The Carrot Movies is a web application that allows users to search for movies and retrieve detailed information about them using the OMDB API. This app provides an easy and convenient way to explore and discover movies based on specific criteria such as title, keyword, or genre. By leveraging the OMDB API, the app provides access to a vast database of movie information, including titles, release years, ratings, plot summaries, cast, and more.
 
 ## Features
 
 - Search for movies by title or keyword
+  ![Alt text](./assets/searching.jpg)
 - Retrieve movie details such as release year, rating, plot, and cast
+  ![Alt text](./assets/sowing-more.jpg)
 - Display movie posters for visual representation
+  ![Alt text](./assets/search-result.jpg)
 - Toggle between showing more or less details for each movie
 
 ## Technologies Used
@@ -28,7 +32,7 @@ git clone https://github.com/kc-clintone/movies-search-app.git
 2. Navigate to the project directory:
 
 ```bash
-cd movie-search-app
+cd movies-search-app
 ```
 
 3. Open the `index.html` file in a web browser.
@@ -36,24 +40,24 @@ cd movie-search-app
 ## Usage
 
 1. Enter a movie title or keyword in the search input field.
-2. Press the Enter key or click the "Search" button.
+2. Press the Enter key or click the "Search" button next to the search bar.
 3. The app will retrieve the matching movies from the OMDB API.
-4. The movie results will be displayed, including the title, release year, rating, and a "Show More Details" button.
-5. To view additional details such as the plot and cast, click the "Show More Details" button. The button will toggle between "Show Less Details" and "Show More Details" depending on the current state.
+4. The movie results will be displayed, including the title, release year, rating, and a "View More" button.
+5. To view additional details such as the plot and cast, click the "View More" button. The button will toggle between "View Less" and "View More" depending on the current state.
 6. Scroll through the movie results to explore more movies.
-7. To search for another movie, repeat steps 1-6.
+7. To search for another movie, click the cancel button next to search button to reset the app and then repeat steps 1-6.
 
-## API Key
+## API Key (Optional)
 
-This app utilizes the OMDB API to fetch movie data. To use the app, you need to obtain an API key from the OMDB website (http://www.omdbapi.com/) and replace the placeholder `'YOUR_API_KEY'` in the `script.js` file with your actual API key.
+This part is optional, the app utilizes the OMDB API to fetch movie data. To use the app, you need to obtain an API key from the OMDB website (http://www.omdbapi.com/) and replace `'apikey=55253d3'` in the `app.js` file with your actual API key as shown below.
 
 ```javascript
-const apiKey = 'YOUR_API_KEY';
+const url = `http://www.omdbapi.com/?apikey=55253d3&s=${query}&page=${page}`;
 ```
 
 ## Contributing
 
-Contributions are welcome! If you find any bugs or have suggestions for improvements, please open an issue or submit a pull request.
+Contributions are welcome! If you find any bugs or have suggestions for improvements, please open an issue or submit a pull request ,thank you.
 
 ## License
 

@@ -214,20 +214,20 @@ async function toggleDetails(button, imdbID) {
 
 			const data = await fetchMovieDetails(imdbID);
 			moreDetails.innerHTML += `
-        <p class='common-stat-h4-styles'>Genre:</p>
-        <span class='common-stat-h3-styles'>${data.Genre}</span>
-        <p class='common-stat-h4-styles'>Rating:</p>
-        <span class='common-stat-h3-styles'>${data.imdbRating}</span>
-        <p class='common-stat-h4-styles'>Plot:</p>
-        <span class='common-stat-h3-styles'>${data.Plot}</span>
-        <p class='common-stat-h4-styles'>Actors:</p>
-        <span class='common-stat-h3-styles'>${data.Actors}</span>
+        <p class='title'>Genre:</p>
+        <span class='subtitle'>${data.Genre}</span>
+        <p class='title'>Rating:</p>
+        <span class='subtitle'>${data.imdbRating}</span>
+        <p class='title'>Plot:</p>
+        <span class='subtitle'>${data.Plot}</span>
+        <p class='title'>Actors:</p>
+        <span class='subtitle'>${data.Actors}</span>
       `;
 		} catch (error) {
-			console.error(error.message);
+			`<span class='subtitle'>Oops!, An error occured.</span>`;
 		} finally {
-			button.textContent = isExpanded ? 'View less' : 'View more';
 			button.classList.remove('loading');
+			button.textContent = isExpanded ? 'View less' : 'View more';
 		}
 	}
 

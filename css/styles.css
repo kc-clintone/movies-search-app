@@ -8,6 +8,10 @@ body {
 	font-family: 'Verdana', Geneva, Tahoma, sans-serif;
 }
 
+html {
+	scroll-behavior: smooth;
+}
+
 /* ====header===== */
 header {
 	position: fixed;
@@ -66,7 +70,7 @@ main {
 	padding: 1rem;
 	width: 100%;
 	height: 90%;
-	max-width: 1400px;
+	max-width: 1300px;
 	align-items: center;
 	scroll-behavior: smooth;
 	overflow-y: auto;
@@ -311,25 +315,18 @@ main {
 }
 
 /* =====stats===== */
-.common-stat-h4-styles {
+.title {
 	padding: 0.2rem 0;
 	color: rgb(73, 255, 18);
 	font-size: 16px;
 	font-weight: bold;
 }
 
-.common-stat-h3-styles {
+.subtitle {
 	font-size: 13px;
 	font-weight: lighter;
 	color: rgb(194, 192, 192);
 	text-align: center;
-}
-
-.common-cast-card-styles {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.5rem;
-	padding-top: 0.3rem;
 }
 
 /* ====cast===== */
@@ -351,7 +348,7 @@ main {
 }
 
 .cast {
-	border: 1px solid rgb(100, 100, 100);
+	background-color: rgb(100, 100, 100);
 	padding: 0.2rem 0.6rem;
 	border-radius: 0.5rem;
 }
@@ -381,8 +378,8 @@ main {
 
 /* paginatopn */
 .pagination-button {
-	background-color: #f2f2f2;
-	color: #333;
+	background-color: #5eff00;
+	color: #525151;
 	border: none;
 	padding: 10px 16px;
 	margin: 2px;
