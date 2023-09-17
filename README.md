@@ -49,10 +49,10 @@ cd movies-search-app
 
 ## API Key (Optional)
 
-This part is optional, the app utilizes the OMDB API to fetch movie data. To use the app, you need to obtain an API key from the OMDB website (http://www.omdbapi.com/) and replace `'apikey=55253d3'` in the `app.js` file with your actual API key as shown below.
+This part is optional, the app utilizes the OMDB API to fetch movie data. To use the app, you need to obtain an API key from the OMDB website (http://www.omdbapi.com/) and replace `'apikey=123test'` in the `app.js` file with your actual API key as shown below.
 
 ```javascript
-const url = `http://www.omdbapi.com/?apikey=55253d3&s=${query}&page=${page}`;
+const url = `http://www.omdbapi.com/?apikey=123test&s=${query}&page=${page}`;
 ```
 
 ## Contributing
