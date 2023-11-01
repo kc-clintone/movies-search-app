@@ -46,6 +46,7 @@ cd movies-search-app
 5. To view additional details such as the plot and cast, click the "View More" button. The button will toggle between "View Less" and "View More" depending on the current state.
 6. Scroll through the movie results to explore more movies.
 7. To search for another movie, click the cancel button next to search button to reset the app and then repeat steps 1-6.
+8. Enjoy using the app. Feel free to reach out if there is anything you'd like me to address.
 
 ## API Key (Optional)
 
